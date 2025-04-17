@@ -37,7 +37,7 @@ class CustomOpenAIClient:
             auth=("", self.api_key),
             json={
                 "model": model,
-                "input": input,
+                "inputs": input,
                 "dimensions": dimensions,
             },)
         response.raise_for_status()
