@@ -1,4 +1,2 @@
-from _client import CustomOpenAIClient
-from _exceptions import (
-    CustomOpenAIError,
-)
+from ._client import CustomOpenAIClient
+from ._exceptions import CustomOpenAIError
