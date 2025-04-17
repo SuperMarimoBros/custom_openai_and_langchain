@@ -11,9 +11,9 @@ setup(
         'custom_langchain': 'custom_langchain',
     },
     install_requires=[
-        "openai>=0.27.0",
-        "pydantic>=1.10.0,<2.0.0",
-        "langchain-community>=0.1.0"
+        "openai>=1.70.0",
+        "pydantic<3.0.0,>=2.0.0",
+        "langchain-community>=0.2.19"
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
