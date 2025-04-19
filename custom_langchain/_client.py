@@ -16,13 +16,18 @@ from pydantic import Field
 from langchain_core.embeddings import Embeddings
 
 class CustomOpenAIEmbeddings(Embeddings):
-    def __init__(self, embeddings_endpoint: str, model: str = "text-embedding-3-large"):
+    def __init__(self, embeddings_endpoint: str, api_key:str, model: str = "text-embedding-3-large"):
         self.model = model
         self.embeddings_endpoint = embeddings_endpoint
+        self.api_key = api_key
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         response = requests.post(
             self.embeddings_endpoint,
+            headers={
+                "x-api-key": self.api_key,
+                "Content-Type": "application/json"
+            },
             json={
                 "model": self.model,
                 "inputs": texts,
@@ -45,6 +50,7 @@ class CustomOpenAiModel(BaseChatModel):
 
     model_name: str = Field(alias="model")
     end_point: str = Field(alias="end_point")
+    api_key: str
     """The name of the model"""
     temperature: Optional[float] = None
     max_tokens: Optional[int] = None
@@ -93,7 +99,8 @@ class CustomOpenAiModel(BaseChatModel):
                 message_contents.append({"role": "assistant", "content": msg.content})
 
         headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "x-api-key": self.api_key
         }
         json_data = {
             "model": self.model_name,

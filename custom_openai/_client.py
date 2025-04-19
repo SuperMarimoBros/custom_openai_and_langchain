@@ -16,7 +16,10 @@ class CustomOpenAIClient:
         ) -> ChatCompletion:
         response = requests.post(
             self.api_endpoint+"chat/create",
-            auth=("", self.api_key),
+            headers={
+                "x-api-key": self.api_key,
+                "Content-Type": "application/json"
+            },
             json={
                 "model": model,
                 "messages": messages,
@@ -34,7 +37,10 @@ class CustomOpenAIClient:
         ) -> CreateEmbeddingResponse:
         response = requests.post(
             self.api_endpoint+"embeddings/create",
-            auth=("", self.api_key),
+            headers={
+                "x-api-key": self.api_key,
+                "Content-Type": "application/json"
+            },
             json={
                 "model": model,
                 "inputs": input,
